@@ -181,6 +181,15 @@ async function run() {
         res.status(500).send({ message: err.message });
       }
     });
+    app.post("/api/v1/create-testimonials", async (req, res) => {
+      const data = req.body;
+      try {
+        const result = await testimonital.insertOne(data);
+        res.status(200).send(result);
+      } catch (err) {
+        res.status(500).send({ message: err.message });
+      }
+    });
 
 
 
