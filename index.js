@@ -31,6 +31,7 @@ async function run() {
     const donation = db.collection("donation");
     const leaderboard = db.collection("leaderboard");
     const volunteer = db.collection("volunteer");
+    const testimonital = db.collection("testimonital");
 
     // User Registration
     app.post("/api/v1/register", async (req, res) => {
@@ -140,8 +141,6 @@ async function run() {
       res.send(result);
     });
 
-
-
     //leaderboard...
 
     app.get("/api/v1/leaderboard", async (req, res) => {
@@ -152,18 +151,8 @@ async function run() {
         res.status(500).send({ message: err.message });
       }
     });
-    app.post("/api/v1/leaderboard", async (req, res) => {
-      try {
-        const data = req.body;
-        const result = await leaderboard.insertMany(data);
-        res.status(200).send(result);
-      } catch (err) {
-        res.status(500).send({ message: err.message });
-      }
-    });
 
     //volunteer........
-
 
     app.get("/api/v1/volunteer", async (req, res) => {
       try {
@@ -183,6 +172,15 @@ async function run() {
       }
     });
 
+    //Testomonials..
+    app.get("/api/v1/testimonials", async (req, res) => {
+      try {
+        const result = await testimonital.find().toArray();
+        res.status(200).send(result);
+      } catch (err) {
+        res.status(500).send({ message: err.message });
+      }
+    });
 
 
 
