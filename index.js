@@ -32,6 +32,7 @@ async function run() {
     const leaderboard = db.collection("leaderboard");
     const volunteer = db.collection("volunteer");
     const testimonital = db.collection("testimonital");
+    const feedbackMessages = db.collection("feedbackmessages");
 
     // User Registration
     app.post("/api/v1/register", async (req, res) => {
@@ -191,7 +192,24 @@ async function run() {
       }
     });
 
+    app.get("/api/v1/feedback", async (req, res) => {
+      try {
+        const result = await feedbackMessages.find().toArray();
+        res.status(200).send(result);
+      } catch (err) {
+        res.status(500).send({ message: err.message });
+      }
+    });
 
+    app.post("/api/v1/create-feedback", async (req, res) => {
+      try {
+        const data = req.body;
+        const result = await feedbackMessages.insertOne(data);
+        res.status(200).send(result);
+      } catch (err) {
+        res.status(500).send({ message: err.message });
+      }
+    });
 
     // Start the server
     app.listen(port, () => {
